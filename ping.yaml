@@ -1,0 +1,25 @@
+---
+
+- name: Check connectivity to the machine
+  hosts: all
+  become: false # run as root user
+
+  tasks:
+    - name: Ping the machine
+      ansible.builtin.ping:
+
+- name: Perform user creation
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Create the user - breakme
+      ansible.builtin.user:
+         name: breakme
+         create_home: true
+
+    - name: Create file for breakme user
+      ansible.builtin.file:
+         path: /home/breakme/hello.txt
+         owner: 1006
+         state: touch
