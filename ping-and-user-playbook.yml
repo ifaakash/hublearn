@@ -11,15 +11,17 @@
 - name: Perform user creation
   hosts: all
   become: true
+  vars:
+    lab_user: breakme
 
   tasks:
     - name: Create the user - breakme
       ansible.builtin.user:
-         name: breakme
+         name: "{{ lab_user }}"
          create_home: true
 
     - name: Create file for breakme user
       ansible.builtin.file:
-         path: /home/breakme/hello.txt
+         path: "/home/{{ lab_user }}/hello.txt"
          owner: 1006
          state: touch
